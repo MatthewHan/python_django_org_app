@@ -1,0 +1,43 @@
+{% extends "users/base.html" %}
+{% block title %} Home {% endblock %}
+{% block content %}
+    <div class="container">
+        <!-- Jumbotron Header -->
+        <header class="jumbotron hero-spacer">
+            <h2>Welcome to the Group/Organization Membership App</h2>
+            <p>This application is built using Python on the Django MVT framework in 4.5 hours!</p>
+            <p><a class="btn btn-primary btn-large" href = '/users/login/'>Login or Register</a>
+            </p>
+        </header>
+        <!-- Page Features -->
+        <div class="row text-center">
+
+            <div class="col-md-4 col-sm-8 hero-feature">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <h3>View Groups</h3>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-8 hero-feature">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <h3>Join/Leave Groups</h3>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-8 hero-feature">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <h3>Create/Delete Groups</h3>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

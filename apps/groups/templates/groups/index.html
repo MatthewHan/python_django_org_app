@@ -1,0 +1,83 @@
+{% extends "groups/base.html" %}
+{% block title %} Dashboard {% endblock %}
+{% block content %}
+    <div class="container">
+        <h4>Groups & Organizations</h4>
+        <table class="hoverable responsive-table centered">
+            <thead>
+            <tr>
+                <th>
+                    Group Name
+                </th>
+                <th>
+                    Member Count
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if groups %}
+                {% for group in groups %}
+                    <tr>
+                        <td>
+                            <a href="/groups/{{group.id}}/">{{ group.name }}</a>
+                        </td>
+                        <td>
+                            {{ group.membercount }}
+                        </td>
+                        <td>
+                            {{ group.description }}
+                        </td>
+                        <td>
+                            {% if request.user == group.creator %}
+                                <div class="row">
+                                    <form action="/groups/{{group.id}}/" method = 'post'>{% csrf_token %} <input type="hidden" name = '_method' value = 'delete'><button class="btn red">Delete</button></form>
+                                </div>
+                            {% endif %}
+
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col s6">
+                <div class="card hoverable">
+                    <div class="card-content black-text">
+                        <span class="card-title black-text">Add a Group/Organization</span>
+                        <form action="/groups/" method = "post">
+                            {% csrf_token %}
+                            <div class="input-field">
+                                {{ form.name }}
+                                <label for="name">Group/Org Name</label>
+                                {% if form.name.errors %}
+                                    {% for error in form.name.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="input-field">
+                                {{ form.description }}
+                                <label for="description">Description</label>
+                                {% if form.description.errors %}
+                                    {% for error in form.description.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                    </div>
+                    <div class="card-action">
+                        <button class="waves-effect waves-light btn white-text">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

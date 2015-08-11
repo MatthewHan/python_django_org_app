@@ -1,0 +1,46 @@
+{% extends "groups/base.html" %}
+{% block title %} Dashboard {% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m6">
+                <div class="card hoverable">
+                    <div class="card-content black-text">
+                        <span class="card-title black-text">{{group.name}}</span>
+                        <p>{{group.description}}</p>
+                        {% if request.user == group.creator %}
+                            <p>Created By: YOU</p>
+                        {% else %}
+                            <p>Created By: {{group.creator}}</p>
+                        {% endif %}
+                        <p>Members:
+                            {% for member in group.members.all %}
+                                <span>{{ member.first_name }} {{ member.last_name }}</span>
+                            {% endfor %}
+                        </p>
+                    </div>
+                    <div class="card-action">
+                        {% if request.user in group.members.all %}
+                            <div class="row">
+                                <form action="/groups/{{group.id}}/" method = 'post'>{% csrf_token %}
+                                    <input type="hidden" name = '_method' value = 'patch'>
+                                    <input type="hidden" name = '_action' value = 'leave'>
+                                    <button class="btn red">Leave This Group</button>
+                                </form>
+                            </div>
+                        {% else %}
+                            <div class="row">
+                                <form action="/groups/{{group.id}}/" method = 'post'>{% csrf_token %}
+                                    <input type="hidden" name = '_method' value = 'patch'>
+                                    <input type="hidden" name = '_action' value = 'join'>
+                                    <button class="btn blue">Join This Group</button>
+                                </form>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
